@@ -25,17 +25,67 @@ This fork is maintained separately from the original T-Clock Redux project for p
 >
 > This fork is maintained separately from the original T-Clock Redux project for personal use and experimentation.
 
-## Türkçe gündelik saat biçimi
+## Türkçe gündelik saat biçimleri
 
-Bu fork, Türkçe konuşma diline uygun 12 saatlik saat gösterimi için `TRTIME` biçim belirtecini ekler (ör. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
+Bu fork, T-Clock'un saat metni biçim alanında kullanılabilen iki özel biçim belirteci ekler:
 
-**Katkı:** `TRTIME` uygulaması ve ilk Windows x64 GitHub Actions derleme iş akışı, bu fork'un bakımını üstlenen **TeraMaister** ile iş birliği içinde **ChatGPT (OpenAI)** yardımıyla hazırlanmıştır.
+| Belirteç | İşlev |
+|---|---|
+| `TRTIME` | Saati, dakikayı aynen koruyarak Türkçede gündelik konuşma biçiminde yazar. |
+| `APPROXTRTIME` | Saati en yakın 5 dakikaya yuvarlar ve ardından aynı Türkçe konuşma biçiminde yazar. |
 
-## Turkish everyday time format
+### Nasıl kullanılır?
 
-This fork adds the `TRTIME` format token for Turkish conversational 12-hour time (e.g. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
+1. T-Clock ayarlarında saat metninin biçimini (clock text format) düzenlediğiniz alana gidin.
+2. İstediğiniz belirteci biçim metnine doğrudan yazın. Belirteçler büyük harfle ve **yüzde işareti olmadan** kullanılır.
+3. Örneğin yalnızca `TRTIME` veya `APPROXTRTIME` yazabilirsiniz. Tarih ya da başka metinlerle birleştirmek için belirtecin yanına istediğiniz sabit metni ve diğer T-Clock biçim belirteçlerini ekleyin.
 
-**Credits:** The `TRTIME` implementation and the initial Windows x64 GitHub Actions workflow were written with assistance from **ChatGPT (OpenAI)**, in collaboration with **TeraMaister**, who maintains this fork.
+### Örnekler
+
+| Gerçek saat | `TRTIME` | `APPROXTRTIME` |
+|---|---|---|
+| 13:07 | öğleden sonra biri yedi geçiyor | öğleden sonra biri beş geçiyor |
+| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri yirmi geçiyor |
+| 13:28 | öğleden sonra bire iki var | öğleden sonra bir buçuk |
+| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye on beş var |
+| 20:30 | akşam sekiz buçuk | akşam sekiz buçuk |
+
+**Amaç ve fark:** `TRTIME`, sistem saatindeki dakikayı değiştirmeden gösterir; bu nedenle 13:17 gibi bir saat “biri on yedi geçiyor” şeklinde ifade edilir. `APPROXTRTIME` ise görev çubuğunda daha kısa ve kolay okunur bir ifade elde etmek için dakikayı en yakın 5 dakikaya yuvarlar. Örneğin 13:17, yaklaşık gösterimde 13:15 değil 13:20 olur.
+
+Her iki belirteç de 12 saatlik Türkçe saat mantığını kullanır: saat başında saat adı, 30. dakikada “buçuk”, 30'dan sonra sonraki saate kalan süre (“var”), 30'dan önce geçen süre (“geçiyor”) kullanılır. Gün bölümü de eklenir: gece, sabah, öğlen, öğleden sonra veya akşam. Gün bölümü saat aralıklarına göre yaklaşık belirlenir; konuşma alışkanlıkları bölgeye ve kişiye göre değişebilir.
+
+**Katkı:** Bu biçim belirteçlerinin uygulanması ve Windows x64 GitHub Actions derleme iş akışı, fork'un bakımını üstlenen **TeraMaister** ile iş birliği içinde **ChatGPT (OpenAI)** yardımıyla hazırlanmıştır.
+
+## Turkish everyday time formats
+
+This fork adds two custom format tokens that can be entered directly in T-Clock's clock-text format field:
+
+| Token | Purpose |
+|---|---|
+| `TRTIME` | Displays the current time in conversational Turkish, preserving the exact minute. |
+| `APPROXTRTIME` | Rounds the time to the nearest five minutes, then displays it in the same Turkish conversational style. |
+
+### How to use
+
+1. Open T-Clock settings and locate the clock-text format field.
+2. Type the token directly into the format string. Use uppercase letters and **do not add a percent sign**.
+3. Use `TRTIME` or `APPROXTRTIME` by itself, or combine it with literal text and other T-Clock format tokens.
+
+### Examples
+
+| Actual time | `TRTIME` | `APPROXTRTIME` |
+|---|---|---|
+| 13:07 | öğleden sonra biri yedi geçiyor | öğleden sonra biri beş geçiyor |
+| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri yirmi geçiyor |
+| 13:28 | öğleden sonra bire iki var | öğleden sonra bir buçuk |
+| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye on beş var |
+| 20:30 | akşam sekiz buçuk | akşam sekiz buçuk |
+
+**Purpose and difference:** `TRTIME` keeps the exact minute, so 13:17 is rendered as “biri on yedi geçiyor”. `APPROXTRTIME` is intended for a shorter, easier-to-scan taskbar clock: it rounds to the nearest five minutes first. For example, 13:17 becomes 13:20.
+
+Both tokens use a 12-hour Turkish clock pattern: the hour alone at :00, “buçuk” at :30, “geçiyor” before :30, and the remaining time to the next hour with “var” after :30. They also prepend an approximate day period: gece, sabah, öğlen, öğleden sonra, or akşam. These day-period boundaries are practical defaults rather than strict linguistic rules.
+
+**Credits:** These format-token implementations and the Windows x64 GitHub Actions build workflow were prepared with assistance from **ChatGPT (OpenAI)**, in collaboration with **TeraMaister**, who maintains this fork.
 
 T-Clock Redux
 ==============
@@ -98,15 +148,6 @@ If you don't mind to read lots of text, and want to know more about T-Clock and 
 - [ ] + maybe current sun state picture as clock background (plugin) *tbd*
 - [ ] + improved hotkey support *tbd*
 
-
-### Turkish everyday time format
-
-This fork adds the `TRTIME` format token for Turkish conversational 12-hour time
-(e.g. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
-
-**Credits:** The `TRTIME` implementation and the initial Windows x64 GitHub Actions
-workflow were written with assistance from **ChatGPT (OpenAI)**, in collaboration
-with **TeraMaister**, who maintains this fork.
 
 ### Requirements
 * Windows 2000+ *(up to Windows 10 as of 2014)*
