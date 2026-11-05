@@ -89,37 +89,44 @@ Both tokens use a 12-hour Turkish clock pattern: the hour alone at :00, “buçu
 
 ## English conversational time formats
 
-The English equivalents are available as two additional custom format tokens:
+The English formats are available in American and British variants. The original `ENTIME` and `APPROXENTIME` tokens remain available as aliases for the British-style output.
 
 | Token | Purpose |
 |---|---|
-| `ENTIME` | Displays the exact current minute using natural English clock phrasing. |
-| `APPROXENTIME` | Rounds the time to the nearest five minutes, then displays it using the same English phrasing. |
+| `USENTIME` | Exact-minute American English phrasing (after / till). |
+| `UKENTIME` | Exact-minute British English phrasing (past / to). |
+| `APPROXUSENTIME` | Rounds to the nearest five minutes, then uses American phrasing. |
+| `APPROXUKENTIME` | Rounds to the nearest five minutes, then uses British phrasing. |
+| `ENTIME` | Backward-compatible alias for `UKENTIME`. |
+| `APPROXENTIME` | Backward-compatible alias for `APPROXUKENTIME`. |
 
 ### How to use
 
-Enter either token directly in T-Clock's clock-text format field, in uppercase and without a percent sign:
+Enter a token directly in T-Clock's clock-text format field, in uppercase and without a percent sign. For example:
 
 ```text
-ENTIME
-APPROXENTIME
+USENTIME
+UKENTIME
+APPROXUSENTIME
+APPROXUKENTIME
 ```
 
-You can also combine either token with literal text or other T-Clock format tokens.
+You can also combine a token with literal text or other T-Clock format tokens.
 
 ### Examples
 
-| Actual time | `ENTIME` | `APPROXENTIME` |
+| Actual time | `USENTIME` | `UKENTIME` |
 |---|---|---|
-| 13:07 | seven minutes past one in the afternoon | five minutes past one in the afternoon |
-| 13:17 | seventeen minutes past one in the afternoon | quarter past one in the afternoon |
-| 13:28 | twenty-eight minutes past one in the afternoon | half past one in the afternoon |
-| 13:43 | seventeen minutes to two in the afternoon | quarter to two in the afternoon |
-| 20:30 | half past eight in the evening | half past eight in the evening |
+| 13:05 | five after one in the afternoon | five past one in the afternoon |
+| 13:07 | seven minutes after one in the afternoon | seven minutes past one in the afternoon |
+| 13:15 | quarter after one in the afternoon | quarter past one in the afternoon |
+| 13:30 | half past one in the afternoon | half past one in the afternoon |
+| 13:45 | quarter till two in the afternoon | quarter to two in the afternoon |
+| 13:55 | five till two in the afternoon | five to two in the afternoon |
 
-**Purpose and wording:** `ENTIME` preserves the exact minute. `APPROXENTIME` is intended for a shorter, more glanceable taskbar clock by rounding to the nearest five minutes. The formatter uses common English expressions such as “quarter past”, “half past”, “quarter to”, “minutes past”, and “minutes to”. It also uses “o'clock” for exact hours and “noon” / “midnight” at exactly 12:00 / 00:00.
+Both styles use “o'clock” for exact hours, “noon” at exactly 12:00, and “midnight” at exactly 00:00. For non-five-minute values, the formatter includes “minute” or “minutes”; on five-minute increments it omits that word. The approximate tokens round to the nearest five minutes before formatting.
 
-The day-period suffixes follow common English usage: “in the morning”, “in the afternoon”, “in the evening”, and “at night”. These boundaries are practical defaults; natural usage can vary by region and context. The wording is broadly understandable English rather than a strict representation of one specific regional dialect.
+Day-period suffixes are shared by both variants: “in the morning”, “in the afternoon”, “in the evening”, and “at night”. The boundaries are practical defaults rather than strict linguistic rules.
 
 T-Clock Redux
 ==============
