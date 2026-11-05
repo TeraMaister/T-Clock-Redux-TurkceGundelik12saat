@@ -94,8 +94,20 @@ static wchar_t* TurkishTime(wchar_t* out, const SYSTEMTIME* pt)
 	int minute = pt->wMinute;
 
 	result[0] = L'\0';
-	if(pt->wHour >= 13)
-		wcscat(result, L"(akşam) ");
+
+	/* Use natural Turkish day-period expressions. */
+	if(pt->wHour <= 4)
+		wcscat(result, L"gece ");
+	else if(pt->wHour <= 11)
+		wcscat(result, L"sabah ");
+	else if(pt->wHour == 12)
+		wcscat(result, L"öğlen ");
+	else if(pt->wHour <= 17)
+		wcscat(result, L"öğleden sonra ");
+	else if(pt->wHour <= 20)
+		wcscat(result, L"akşam ");
+	else
+		wcscat(result, L"gece ");
 
 	if(minute == 0) {
 		wcscat(result, hour_nom[hour]);
