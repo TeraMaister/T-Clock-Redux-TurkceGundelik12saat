@@ -8,6 +8,20 @@
 >
 > Bu fork, orijinal T-Clock Redux projesinden ayrı olarak, kişisel kullanım ve deneme amacıyla sürdürülmektedir.
 
+---
+
+This fork is maintained separately from the original T-Clock Redux project for personal use and experimentation.
+
+> ## ⚠️ NOTICE: THIS FORK USES ARTIFICIAL INTELLIGENCE.
+>
+> Some code changes and documentation in this project were prepared with the assistance of ChatGPT (OpenAI).
+>
+> **Use at your own risk:** You use this software at your own responsibility. The fork owner accepts no responsibility for damages arising from the use of this software, its failure to work, data loss, system errors, or any other direct or indirect consequences. The software is provided "AS IS", without any warranty. You are encouraged to review the source code and back up important data before using it.
+>
+> **Support and contribution requests:** The fork owner is not a professional software developer and has limited programming knowledge. There is no commitment to fix bugs, add features, fulfill custom requests, or provide technical support. Requests may not be fulfilled, and the changes provided in this fork may remain as they are.
+>
+> This fork is maintained separately from the original T-Clock Redux project for personal use and experimentation.
+
 > **⚠️ DİKKAT: BU FORKTA YAPAY ZEKA KULLANILMIŞTIR.**  
 > Bu projedeki bazı kod değişiklikleri ve dokümantasyon, ChatGPT (OpenAI) yardımıyla hazırlanmıştır.
 
