@@ -1,0 +1,27 @@
+name: Build T-Clock (Windows)
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build x64
+        shell: pwsh
+        run: |
+          msbuild "src/~ide/msvc-vs.sln" /m /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /verbosity:minimal
+
+      - name: Upload x64 binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: T-Clock-Turkish-x64
+          path: |
+            Release/**/*.dll
+            Release/**/*.exe
+          if-no-files-found: error
