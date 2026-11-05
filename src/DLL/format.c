@@ -65,6 +65,65 @@ void InitFormat(const wchar_t* section, SYSTEMTIME* lt)   //--------------------
 		m_AltYear = _wtoi(year);
 }
 
+
+/* Turkish everyday 12-hour spoken time format (TRTIME). */
+static wchar_t* TurkishTime(wchar_t* out, const SYSTEMTIME* pt)
+{
+	static const wchar_t* hour_nom[12] = {
+		L"on iki", L"bir", L"iki", L"üç", L"dört", L"beş",
+		L"altı", L"yedi", L"sekiz", L"dokuz", L"on", L"on bir"
+	};
+	static const wchar_t* hour_acc[12] = {
+		L"on ikiyi", L"biri", L"ikiyi", L"üçü", L"dördü", L"beşi",
+		L"altıyı", L"yediyi", L"sekizi", L"dokuzu", L"onu", L"on biri"
+	};
+	static const wchar_t* hour_dat[12] = {
+		L"on ikiye", L"bire", L"ikiye", L"üçe", L"dörde", L"beşe",
+		L"altıya", L"yediye", L"sekize", L"dokuza", L"ona", L"on bire"
+	};
+	static const wchar_t* number[30] = {
+		L"", L"bir", L"iki", L"üç", L"dört", L"beş", L"altı", L"yedi",
+		L"sekiz", L"dokuz", L"on", L"on bir", L"on iki", L"on üç",
+		L"on dört", L"on beş", L"on altı", L"on yedi", L"on sekiz",
+		L"on dokuz", L"yirmi", L"yirmi bir", L"yirmi iki", L"yirmi üç",
+		L"yirmi dört", L"yirmi beş", L"yirmi altı", L"yirmi yedi",
+		L"yirmi sekiz", L"yirmi dokuz"
+	};
+	wchar_t result[80];
+	int hour = pt->wHour % 12;
+	int minute = pt->wMinute;
+
+	result[0] = L'\0';
+	if(pt->wHour >= 13)
+		wcscat(result, L"(akşam) ");
+
+	if(minute == 0) {
+		wcscat(result, hour_nom[hour]);
+	} else if(minute < 30) {
+		wcscat(result, hour_acc[hour]);
+		wcscat(result, L" ");
+		if(minute == 15)
+			wcscat(result, L"çeyrek");
+		else
+			wcscat(result, number[minute]);
+		wcscat(result, L" geçiyor");
+	} else if(minute == 30) {
+		wcscat(result, hour_nom[hour]);
+		wcscat(result, L" buçuk");
+	} else {
+		wcscat(result, hour_dat[(hour + 1) % 12]);
+		wcscat(result, L" ");
+		if(minute == 45)
+			wcscat(result, L"çeyrek");
+		else
+			wcscat(result, number[60 - minute]);
+		wcscat(result, L" var");
+	}
+
+	wcscpy(out, result);
+	return out + wcslen(result);
+}
+
 __pragma(warning(push))
 __pragma(warning(disable:4701)) // MSVC is confused with our S(..) format (uptime) about "num" being "uninitialized"
 //================================================================================================
@@ -294,6 +353,11 @@ unsigned MakeFormat(wchar_t buf[FORMAT_MAX_SIZE], const wchar_t* fmt, SYSTEMTIME
 						  DATE_SHORTDATE, pt, NULL, out, (int)(bufend-out));
 			for(; *out; ++out);
 			fmt += 4;
+		}
+		
+		else if(*fmt == 'T' && wcsncmp(fmt, L"TRTIME", 6) == 0) {
+			out = TurkishTime(out, pt);
+			fmt += 6;
 		}
 		
 		else if(*fmt == 'T' && wcsncmp(fmt, L"TIME", 4) == 0) {
