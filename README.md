@@ -1,3 +1,13 @@
+> ## ⚠️ DİKKAT: BU FORKTA YAPAY ZEKA KULLANILMIŞTIR.
+>
+> Bu projedeki bazı kod değişiklikleri ve dokümantasyon, ChatGPT (OpenAI) yardımıyla hazırlanmıştır.
+>
+> **Kullanım ve sorumluluk:** Bu yazılımı kendi sorumluluğunuzda kullanırsınız. Yazılımın kullanımından, çalışmamasından, veri kaybından, sistem hatalarından veya doğabilecek diğer doğrudan ya da dolaylı zararlardan fork sahibi sorumlu tutulamaz. Yazılım herhangi bir garanti verilmeksizin, olduğu gibi sunulmaktadır. Kullanmadan önce kaynak kodunu incelemeniz ve önemli verilerinizi yedeklemeniz önerilir.
+>
+> **Destek ve katkı talepleri:** Fork sahibi profesyonel bir yazılım geliştiricisi değildir ve kodlama bilgisi sınırlıdır. Hata düzeltme, yeni özellik ekleme, özel istekleri yerine getirme veya teknik destek sağlama taahhüdü yoktur. Talepler karşılanamayabilir ve bu fork için sunulan değişiklikler olduğu hâliyle kalabilir.
+>
+> Bu fork, orijinal T-Clock Redux projesinden ayrı olarak, kişisel kullanım ve deneme amacıyla sürdürülmektedir.
+
 > **⚠️ DİKKAT: BU FORKTA YAPAY ZEKA KULLANILMIŞTIR.**  
 > Bu projedeki bazı kod değişiklikleri ve dokümantasyon, ChatGPT (OpenAI) yardımıyla hazırlanmıştır.
 
