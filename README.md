@@ -59,6 +59,16 @@ If you don't mind to read lots of text, and want to know more about T-Clock and 
 - [ ] + maybe current sun state picture as clock background (plugin) *tbd*
 - [ ] + improved hotkey support *tbd*
 
+
+### Turkish everyday time format
+
+This fork adds the `TRTIME` format token for Turkish conversational 12-hour time
+(e.g. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
+
+**Credits:** The `TRTIME` implementation and the initial Windows x64 GitHub Actions
+workflow were written with assistance from **ChatGPT (OpenAI)**, in collaboration
+with **TeraMaister**, who maintains this fork.
+
 ### Requirements
 * Windows 2000+ *(up to Windows 10 as of 2014)*
 
