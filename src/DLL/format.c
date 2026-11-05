@@ -151,8 +151,8 @@ static wchar_t* ApproximateTurkishTime(wchar_t* out, const SYSTEMTIME* pt)
 	return TurkishTime(out, &rounded);
 }
 
-/* English conversational time, preserving the exact minute. */
-static wchar_t* EnglishTime(wchar_t* out, const SYSTEMTIME* pt)
+/* English conversational time. use_us selects American (after/till) or British (past/to) wording. */
+static wchar_t* EnglishTime(wchar_t* out, const SYSTEMTIME* pt, int use_us)
 {
 	static const wchar_t* hour_name[12] = {
 		L"twelve", L"one", L"two", L"three", L"four", L"five",
@@ -170,8 +170,10 @@ static wchar_t* EnglishTime(wchar_t* out, const SYSTEMTIME* pt)
 	int hour = pt->wHour % 12;
 	int minute = pt->wMinute;
 	const wchar_t* period;
+	const wchar_t* past_word = use_us ? L" after " : L" past ";
+	const wchar_t* to_word = use_us ? L" till " : L" to ";
 
-	result[0] = L'\\0';
+	result[0] = L'\0';
 	if(pt->wHour == 0 && minute == 0) {
 		wcscpy(result, L"midnight");
 	} else if(pt->wHour == 12 && minute == 0) {
@@ -180,22 +182,28 @@ static wchar_t* EnglishTime(wchar_t* out, const SYSTEMTIME* pt)
 		wcscat(result, hour_name[hour]);
 		wcscat(result, L" o'clock");
 	} else if(minute == 15) {
-		wcscat(result, L"quarter past ");
+		wcscat(result, L"quarter");
+		wcscat(result, past_word);
 		wcscat(result, hour_name[hour]);
 	} else if(minute == 30) {
 		wcscat(result, L"half past ");
 		wcscat(result, hour_name[hour]);
 	} else if(minute == 45) {
-		wcscat(result, L"quarter to ");
+		wcscat(result, L"quarter");
+		wcscat(result, to_word);
 		wcscat(result, hour_name[(hour + 1) % 12]);
 	} else if(minute < 30) {
 		wcscat(result, number[minute]);
-		wcscat(result, minute == 1 ? L" minute past " : L" minutes past ");
+		if(minute % 5 != 0)
+			wcscat(result, minute == 1 ? L" minute" : L" minutes");
+		wcscat(result, past_word);
 		wcscat(result, hour_name[hour]);
 	} else {
 		int remaining = 60 - minute;
 		wcscat(result, number[remaining]);
-		wcscat(result, remaining == 1 ? L" minute to " : L" minutes to ");
+		if(remaining % 5 != 0)
+			wcscat(result, remaining == 1 ? L" minute" : L" minutes");
+		wcscat(result, to_word);
 		wcscat(result, hour_name[(hour + 1) % 12]);
 	}
 
@@ -210,15 +218,14 @@ static wchar_t* EnglishTime(wchar_t* out, const SYSTEMTIME* pt)
 	else
 		period = L" at night";
 
-	if(pt->wHour != 0 || minute != 0) {
+	if(pt->wHour != 0 || minute != 0)
 		wcscat(result, period);
-	}
 	wcscpy(out, result);
 	return out + wcslen(result);
 }
 
 /* English approximate spoken time, rounded to the nearest five minutes. */
-static wchar_t* ApproximateEnglishTime(wchar_t* out, const SYSTEMTIME* pt)
+static wchar_t* ApproximateEnglishTime(wchar_t* out, const SYSTEMTIME* pt, int use_us)
 {
 	SYSTEMTIME rounded = *pt;
 	int minute = ((int)pt->wMinute + 2) / 5 * 5;
@@ -228,9 +235,8 @@ static wchar_t* ApproximateEnglishTime(wchar_t* out, const SYSTEMTIME* pt)
 		rounded.wHour = (WORD)((rounded.wHour + 1) % 24);
 	}
 	rounded.wMinute = (WORD)minute;
-	return EnglishTime(out, &rounded);
+	return EnglishTime(out, &rounded, use_us);
 }
-
 
 __pragma(warning(push))
 __pragma(warning(disable:4701)) // MSVC is confused with our S(..) format (uptime) about "num" being "uninitialized"
@@ -468,13 +474,33 @@ unsigned MakeFormat(wchar_t buf[FORMAT_MAX_SIZE], const wchar_t* fmt, SYSTEMTIME
 			fmt += 12;
 		}
 
+		else if(*fmt == 'A' && wcsncmp(fmt, L"APPROXUSENTIME", 14) == 0) {
+			out = ApproximateEnglishTime(out, pt, 1);
+			fmt += 14;
+		}
+
+		else if(*fmt == 'A' && wcsncmp(fmt, L"APPROXUKENTIME", 14) == 0) {
+			out = ApproximateEnglishTime(out, pt, 0);
+			fmt += 14;
+		}
+
 		else if(*fmt == 'A' && wcsncmp(fmt, L"APPROXENTIME", 12) == 0) {
-			out = ApproximateEnglishTime(out, pt);
+			out = ApproximateEnglishTime(out, pt, 0);
 			fmt += 12;
 		}
 
+		else if(*fmt == 'U' && wcsncmp(fmt, L"USENTIME", 8) == 0) {
+			out = EnglishTime(out, pt, 1);
+			fmt += 8;
+		}
+
+		else if(*fmt == 'U' && wcsncmp(fmt, L"UKENTIME", 8) == 0) {
+			out = EnglishTime(out, pt, 0);
+			fmt += 8;
+		}
+
 		else if(*fmt == 'E' && wcsncmp(fmt, L"ENTIME", 6) == 0) {
-			out = EnglishTime(out, pt);
+			out = EnglishTime(out, pt, 0);
 			fmt += 6;
 		}
 
