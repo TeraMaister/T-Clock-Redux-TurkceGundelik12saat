@@ -18,6 +18,7 @@ jobs:
       - name: Build x64
         shell: pwsh
         run: |
+          $env:CL = "/utf-8"
           msbuild "src/~ide/msvc-vs.sln" /m /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /verbosity:minimal
 
       - name: Upload x64 binaries
