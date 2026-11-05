@@ -12,6 +12,20 @@
 
 This fork is maintained separately from the original T-Clock Redux project for personal use and experimentation.
 
+---
+
+## Türkçe gündelik saat biçimi
+
+Bu fork, Türkçe konuşma diline uygun 12 saatlik saat gösterimi için `TRTIME` biçim belirtecini ekler (ör. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
+
+**Katkı:** `TRTIME` uygulaması ve ilk Windows x64 GitHub Actions derleme iş akışı, bu fork'un bakımını üstlenen **TeraMaister** ile iş birliği içinde **ChatGPT (OpenAI)** yardımıyla hazırlanmıştır.
+
+## Turkish everyday time format
+
+This fork adds the `TRTIME` format token for Turkish conversational 12-hour time (e.g. `sekizi çeyrek geçiyor`, `dokuz buçuk`, `on ikiye çeyrek var`).
+
+**Credits:** The `TRTIME` implementation and the initial Windows x64 GitHub Actions workflow were written with assistance from **ChatGPT (OpenAI)**, in collaboration with **TeraMaister**, who maintains this fork.
+
 > ## ⚠️ NOTICE: THIS FORK USES ARTIFICIAL INTELLIGENCE.
 >
 > Some code changes and documentation in this project were prepared with the assistance of ChatGPT (OpenAI).
