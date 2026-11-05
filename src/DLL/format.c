@@ -124,6 +124,21 @@ static wchar_t* TurkishTime(wchar_t* out, const SYSTEMTIME* pt)
 	return out + wcslen(result);
 }
 
+
+/* Turkish approximate spoken time, rounded to the nearest five minutes. */
+static wchar_t* ApproximateTurkishTime(wchar_t* out, const SYSTEMTIME* pt)
+{
+	SYSTEMTIME rounded = *pt;
+	int minute = ((int)pt->wMinute + 2) / 5 * 5;
+
+	if(minute >= 60) {
+		minute = 0;
+		rounded.wHour = (WORD)((rounded.wHour + 1) % 24);
+	}
+	rounded.wMinute = (WORD)minute;
+	return TurkishTime(out, &rounded);
+}
+
 __pragma(warning(push))
 __pragma(warning(disable:4701)) // MSVC is confused with our S(..) format (uptime) about "num" being "uninitialized"
 //================================================================================================
@@ -355,6 +370,11 @@ unsigned MakeFormat(wchar_t buf[FORMAT_MAX_SIZE], const wchar_t* fmt, SYSTEMTIME
 			fmt += 4;
 		}
 		
+		else if(*fmt == 'A' && wcsncmp(fmt, L"APPROXTRTIME", 12) == 0) {
+			out = ApproximateTurkishTime(out, pt);
+			fmt += 12;
+		}
+
 		else if(*fmt == 'T' && wcsncmp(fmt, L"TRTIME", 6) == 0) {
 			out = TurkishTime(out, pt);
 			fmt += 6;
