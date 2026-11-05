@@ -45,9 +45,9 @@ Bu fork, T-Clock'un saat metni biçim alanında kullanılabilen iki özel biçim
 | Gerçek saat | `TRTIME` | `APPROXTRTIME` |
 |---|---|---|
 | 13:07 | öğleden sonra biri yedi geçiyor | öğleden sonra biri beş geçiyor |
-| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri yirmi geçiyor |
-| 13:28 | öğleden sonra bire iki var | öğleden sonra bir buçuk |
-| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye on beş var |
+| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri çeyrek geçiyor |
+| 13:28 | öğleden sonra biri yirmi sekiz geçiyor | öğleden sonra bir buçuk |
+| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye çeyrek var |
 | 20:30 | akşam sekiz buçuk | akşam sekiz buçuk |
 
 **Amaç ve fark:** `TRTIME`, sistem saatindeki dakikayı değiştirmeden gösterir; bu nedenle 13:17 gibi bir saat “biri on yedi geçiyor” şeklinde ifade edilir. `APPROXTRTIME` ise görev çubuğunda daha kısa ve kolay okunur bir ifade elde etmek için dakikayı en yakın 5 dakikaya yuvarlar. Örneğin 13:17, yaklaşık gösterimde 13:15 değil 13:20 olur.
@@ -76,9 +76,9 @@ This fork adds two custom format tokens that can be entered directly in T-Clock'
 | Actual time | `TRTIME` | `APPROXTRTIME` |
 |---|---|---|
 | 13:07 | öğleden sonra biri yedi geçiyor | öğleden sonra biri beş geçiyor |
-| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri yirmi geçiyor |
-| 13:28 | öğleden sonra bire iki var | öğleden sonra bir buçuk |
-| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye on beş var |
+| 13:17 | öğleden sonra biri on yedi geçiyor | öğleden sonra biri çeyrek geçiyor |
+| 13:28 | öğleden sonra biri yirmi sekiz geçiyor | öğleden sonra bir buçuk |
+| 13:43 | öğleden sonra ikiye on yedi var | öğleden sonra ikiye çeyrek var |
 | 20:30 | akşam sekiz buçuk | akşam sekiz buçuk |
 
 **Purpose and difference:** `TRTIME` keeps the exact minute, so 13:17 is rendered as “biri on yedi geçiyor”. `APPROXTRTIME` is intended for a shorter, easier-to-scan taskbar clock: it rounds to the nearest five minutes first. For example, 13:17 becomes 13:20.
