@@ -87,6 +87,40 @@ Both tokens use a 12-hour Turkish clock pattern: the hour alone at :00, “buçu
 
 **Credits:** These format-token implementations and the Windows x64 GitHub Actions build workflow were prepared with assistance from **ChatGPT (OpenAI)**, in collaboration with **TeraMaister**, who maintains this fork.
 
+## English conversational time formats
+
+The English equivalents are available as two additional custom format tokens:
+
+| Token | Purpose |
+|---|---|
+| `ENTIME` | Displays the exact current minute using natural English clock phrasing. |
+| `APPROXENTIME` | Rounds the time to the nearest five minutes, then displays it using the same English phrasing. |
+
+### How to use
+
+Enter either token directly in T-Clock's clock-text format field, in uppercase and without a percent sign:
+
+```text
+ENTIME
+APPROXENTIME
+```
+
+You can also combine either token with literal text or other T-Clock format tokens.
+
+### Examples
+
+| Actual time | `ENTIME` | `APPROXENTIME` |
+|---|---|---|
+| 13:07 | seven minutes past one in the afternoon | five minutes past one in the afternoon |
+| 13:17 | seventeen minutes past one in the afternoon | quarter past one in the afternoon |
+| 13:28 | twenty-eight minutes past one in the afternoon | half past one in the afternoon |
+| 13:43 | seventeen minutes to two in the afternoon | quarter to two in the afternoon |
+| 20:30 | half past eight in the evening | half past eight in the evening |
+
+**Purpose and wording:** `ENTIME` preserves the exact minute. `APPROXENTIME` is intended for a shorter, more glanceable taskbar clock by rounding to the nearest five minutes. The formatter uses common English expressions such as “quarter past”, “half past”, “quarter to”, “minutes past”, and “minutes to”. It also uses “o'clock” for exact hours and “noon” / “midnight” at exactly 12:00 / 00:00.
+
+The day-period suffixes follow common English usage: “in the morning”, “in the afternoon”, “in the evening”, and “at night”. These boundaries are practical defaults; natural usage can vary by region and context. The wording is broadly understandable English rather than a strict representation of one specific regional dialect.
+
 T-Clock Redux
 ==============
 <sup>GCC<sup>(MinGW-w64)</sup></sup> [![Build Status](https://travis-ci.org/White-Tiger/T-Clock.svg?branch=yg-master)](https://travis-ci.org/White-Tiger/T-Clock) [![Coverity Status](https://scan.coverity.com/projects/3794/badge.svg)](https://scan.coverity.com/projects/white-tiger-t-clock) <sup>MSVC</sup> [![Build status](https://ci.appveyor.com/api/projects/status/b3qehrl4c8naisx4?svg=true)](https://ci.appveyor.com/project/White-Tiger/t-clock) <sub>(click picture below for full size)</sub>
